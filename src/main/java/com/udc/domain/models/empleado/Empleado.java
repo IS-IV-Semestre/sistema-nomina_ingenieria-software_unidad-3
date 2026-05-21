@@ -18,7 +18,7 @@ public abstract class Empleado {
     private int antiguedadAnios;
     private ARL arl;
     private tipoDocumento tipoDocumento;
-    private String documento;
+    private EmpleadoDocumento documento;
 
 
     public Empleado( String nombre, String apellido, int antiguedadAnios, tipoDocumento tipoDocumento, String documento) {

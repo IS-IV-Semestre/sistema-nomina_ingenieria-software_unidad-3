@@ -9,4 +9,9 @@ public record HoraTrabajada(Timestamp horaInicio, Timestamp horaFin,String idEmp
         // Modificamos el constructor para calcular las horas trabajadas
         this(inico, fin, idEmpleado, (double) ((fin.getTime() - inico.getTime()) / 1000 / 60 / 60));
     }
+
+    @Override
+    public String toString() {
+        return String.format(" fecha de inicio: %s | fecha de fin: %s | total horas: %s ", horaInicio, horaFin, horasTrabajadas);
+    }
 }

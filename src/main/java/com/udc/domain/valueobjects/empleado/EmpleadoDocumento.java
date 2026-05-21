@@ -1,13 +1,11 @@
 package com.udc.domain.valueobjects.empleado;
 
-public record EmpleadoApellido(String value) {
-    public EmpleadoApellido(String value) {
+public record EmpleadoDocumento(String value) {
+    public EmpleadoDocumento(String value) {
         String normilizedValue = value.trim();
-
         if(normilizedValue.isBlank() || normilizedValue.isBlank()){
-            throw new IllegalArgumentException("El apellido del empleado no puede estar vacio");
+            throw new IllegalArgumentException("El valor del documento no puede estar vacio");
         }
-
         this.value = value;
     }
 
