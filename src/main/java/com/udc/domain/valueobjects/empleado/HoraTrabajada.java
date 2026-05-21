@@ -1,4 +1,4 @@
-package com.udc.domain.models.empleado;
+package com.udc.domain.valueobjects.empleado;
 
 import java.sql.Timestamp;
 

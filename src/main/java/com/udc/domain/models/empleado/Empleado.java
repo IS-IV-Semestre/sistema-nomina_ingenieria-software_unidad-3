@@ -1,28 +1,36 @@
 package com.udc.domain.models.empleado;
 
+import com.udc.domain.enums.empleado.tipoDocumento;
 import com.udc.domain.models.ARL.ARL;
-import com.udc.domain.models.ARL.DatosEmpresa;
-import com.udc.domain.models.ARL.DatosTrabajador;
+import com.udc.domain.valueobjects.ARL.DatosEmpresa;
+import com.udc.domain.valueobjects.ARL.DatosTrabajador;
+import com.udc.domain.valueobjects.empleado.EmpleadoApellido;
+import com.udc.domain.valueobjects.empleado.EmpleadoId;
+import com.udc.domain.valueobjects.empleado.EmpleadoNombre;
 
-import java.util.List;
+import java.util.UUID;
 
 public abstract class Empleado {
 
-    private String id;
-    private String nombre;
-    private String apellido;
+    private EmpleadoId id;
+    private EmpleadoNombre nombre;
+    private EmpleadoApellido apellido;
     private int antiguedadAnios;
     private ARL arl;
+    private tipoDocumento tipoDocumento;
+    private String documento;
 
 
-    public Empleado(String id, String nombre, String apellido, int antiguedadAnios) {
+    public Empleado( String nombre, String apellido, int antiguedadAnios, tipoDocumento tipoDocumento, String documento) {
         if (antiguedadAnios < 0) {
             throw new IllegalArgumentException("La antigüedad no puede ser negativa.");
         }
-        this.id = id;
-        this.nombre = nombre;
+        this.id = new EmpleadoId(UUID.randomUUID().toString());
+        this.nombre = new EmpleadoNombre(nombre);
         this.antiguedadAnios = antiguedadAnios;
-        this.apellido = apellido;
+        this.apellido = new EmpleadoApellido(apellido);
+        this.tipoDocumento = tipoDocumento;
+        this.documento = documento;
         this.arl = null;
     }
 
@@ -55,9 +63,11 @@ public abstract class Empleado {
     }
 
     // Getters
-    public String getId() { return id; }
-    public String getNombre() { return nombre; }
-    public String getApellido() { return apellido; }
+    public String getId() { return id.toString(); }
+    public String getNombre() { return nombre.toString(); }
+    public String getApellido() { return apellido.toString(); }
     public int getAntiguedadAnios() { return antiguedadAnios; }
     public ARL getArl() { return arl; }
+    public tipoDocumento getTipoDocumento() { return tipoDocumento; }
+    public String getDocumento() { return documento; }
 }

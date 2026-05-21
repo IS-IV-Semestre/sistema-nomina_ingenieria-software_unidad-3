@@ -1,4 +1,4 @@
-package com.udc.domain.models.ARL;
+package com.udc.domain.enums.ARL;
 
 public enum ClaseRiesgo {
     MINIMO("Riesgo I - Mínimo", 0.00522),   // 0.522%

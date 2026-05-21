@@ -1,5 +1,9 @@
 package com.udc.domain.models.ARL;
 
+import com.udc.domain.enums.ARL.ClaseRiesgo;
+import com.udc.domain.valueobjects.ARL.DatosEmpresa;
+import com.udc.domain.valueobjects.ARL.DatosTrabajador;
+
 public class ARL {
     DatosEmpresa datosEmpresa;
     DatosTrabajador trabajador;
