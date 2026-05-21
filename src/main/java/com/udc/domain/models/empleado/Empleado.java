@@ -5,6 +5,7 @@ import com.udc.domain.models.ARL.ARL;
 import com.udc.domain.valueobjects.ARL.DatosEmpresa;
 import com.udc.domain.valueobjects.ARL.DatosTrabajador;
 import com.udc.domain.valueobjects.empleado.EmpleadoApellido;
+import com.udc.domain.valueobjects.empleado.EmpleadoDocumento;
 import com.udc.domain.valueobjects.empleado.EmpleadoId;
 import com.udc.domain.valueobjects.empleado.EmpleadoNombre;
 
@@ -30,7 +31,7 @@ public abstract class Empleado {
         this.antiguedadAnios = antiguedadAnios;
         this.apellido = new EmpleadoApellido(apellido);
         this.tipoDocumento = tipoDocumento;
-        this.documento = documento;
+        this.documento = new EmpleadoDocumento(documento);
         this.arl = null;
     }
 
@@ -69,5 +70,5 @@ public abstract class Empleado {
     public int getAntiguedadAnios() { return antiguedadAnios; }
     public ARL getArl() { return arl; }
     public tipoDocumento getTipoDocumento() { return tipoDocumento; }
-    public String getDocumento() { return documento; }
+    public String getDocumento() { return documento.toString(); }
 }
