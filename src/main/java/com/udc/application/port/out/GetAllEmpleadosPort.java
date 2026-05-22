@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GetAllEmpleadosPort {
-    Optional<List<Empleado>> execute();
+    List<Empleado> execute();
 }
