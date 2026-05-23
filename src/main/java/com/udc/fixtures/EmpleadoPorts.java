@@ -4,6 +4,7 @@ import com.udc.application.port.out.*;
 import com.udc.domain.exceptions.empleado.EmpleadoNotFound;
 import com.udc.domain.models.empleado.Empleado;
 import com.udc.domain.models.empleado.EmpleadoAsalariado;
+import com.udc.domain.models.empleado.EmpleadoPorComision;
 import com.udc.domain.models.empleado.EmpleadoPorHoras;
 import com.udc.domain.valueobjects.empleado.EmpleadoId;
 
@@ -100,6 +101,29 @@ public class EmpleadoPorts {
                 return empleadoPorHoras;
             }
             throw EmpleadoNotFound.becauseId(empleadoPorHoras.getId());
+        }
+    };
+
+    public static final SaveEmpleadoPorComisionPort saveEmpleadoPorComisionPort = new SaveEmpleadoPorComisionPort() {
+        @Override
+        public EmpleadoPorComision create(EmpleadoPorComision empleadoPorComision) {
+            CustomFixtures.EMPLEADOS_POR_COMISION.add(empleadoPorComision);
+            EMPLEADOS.add(empleadoPorComision);
+            System.out.println("Empleado por comisión con ID " + empleadoPorComision.getId() + " ha sido creado.");
+            return empleadoPorComision;
+        }
+    };
+
+    public static final UpdateEmpleadoPorComisionPort updateEmpleadoPorComisionPort = new UpdateEmpleadoPorComisionPort() {
+        @Override
+        public EmpleadoPorComision update(EmpleadoPorComision empleadoPorComision) {
+            int index = EMPLEADOS_POR_COMISION.indexOf(empleadoPorComision);
+            if (index != -1) {
+                EMPLEADOS_POR_COMISION.set(index, empleadoPorComision);
+                System.out.println("Empleado por comisión con ID " + empleadoPorComision.getId() + " ha sido actualizado.");
+                return empleadoPorComision;
+            }
+            throw EmpleadoNotFound.becauseId(empleadoPorComision.getId());
         }
     };
 
