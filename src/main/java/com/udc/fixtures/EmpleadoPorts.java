@@ -8,8 +8,7 @@ import com.udc.domain.valueobjects.empleado.EmpleadoId;
 
 import java.util.List;
 
-import static com.udc.fixtures.CustomFixtures.EMPLEADOS;
-import static com.udc.fixtures.CustomFixtures.EMPLEADOS_ASALARIADOS;
+import static com.udc.fixtures.CustomFixtures.*;
 
 public class EmpleadoPorts {
     public static final SaveEmpleadoAsalariadoPort saveEmpleadoAsalariadoPort = new SaveEmpleadoAsalariadoPort() {
@@ -52,11 +51,16 @@ public class EmpleadoPorts {
     public static final GetAllEmpleadosPort getAllEmpleadosPort = new GetAllEmpleadosPort() {
         @Override
         public List<Empleado> execute() {
-            EMPLEADOS.clear();
-            EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_ASALARIADOS);
-            EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_POR_COMISION);
-            EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_TEMPORALES);
-            EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_POR_HORAS);
+
+            if(!EMPLEADOS.isEmpty()) EMPLEADOS.clear();
+
+            if(!EMPLEADOS_ASALARIADOS.isEmpty()) EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_ASALARIADOS);
+
+            if(!EMPLEADOS_POR_COMISION.isEmpty()) EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_POR_COMISION);
+
+            if(!EMPLEADOS_TEMPORALES.isEmpty()) EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_TEMPORALES);
+
+            if(!EMPLEADOS_POR_HORAS.isEmpty()) EMPLEADOS.addAll(CustomFixtures.EMPLEADOS_POR_HORAS);
 
             return EMPLEADOS;
         }
