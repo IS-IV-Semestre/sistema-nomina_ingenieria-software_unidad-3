@@ -127,6 +127,7 @@ public class EmpleadoPorComisionConsole {
 
     private void mostrarDatosEmpleado() {
         if (validarEmpleadoCreado()) {
+            System.out.println("ID: " + empleadoActual.getId());
             System.out.println("Nombre: " + empleadoActual.getNombre());
             System.out.println("Apellido: " + empleadoActual.getApellido());
             System.out.println("Antigüedad (años): " + empleadoActual.getAntiguedadAnios());
