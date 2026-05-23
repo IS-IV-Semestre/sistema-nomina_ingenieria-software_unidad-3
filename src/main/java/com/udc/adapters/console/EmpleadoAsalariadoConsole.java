@@ -1,6 +1,8 @@
 package com.udc.adapters.console;
 
 import com.udc.application.empleado.EmpleadoAsalariadoService;
+import com.udc.application.service.CreateEmpleadoAsalariadoService;
+import com.udc.application.service.dto.command.CreateEmpleadoAsalariadoCommand;
 import com.udc.domain.enums.empleado.tipoDocumento;
 import com.udc.domain.models.empleado.EmpleadoAsalariado;
 
@@ -69,8 +71,10 @@ public class EmpleadoAsalariadoConsole {
         double salario = leerDouble("Salario mensual: ");
 
         try {
-            current = service.crearEmpleado(nombre, apellido, antiguedad, tipoDoc, documento, salario);
-            System.out.println("Empleado creado con éxito. ID: " + current.getId());
+            CreateEmpleadoAsalariadoCommand command = new CreateEmpleadoAsalariadoCommand(
+                    nombre, apellido, tipoDoc, documento, antiguedad, salario);
+            current = new CreateEmpleadoAsalariadoService().execute(command);
+            System.out.println("Empleado asalariado creado con éxito. ID: " + current.getId());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error al crear empleado: " + ex.getMessage());
         }

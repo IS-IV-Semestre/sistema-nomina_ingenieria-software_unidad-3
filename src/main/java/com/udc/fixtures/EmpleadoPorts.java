@@ -27,27 +27,23 @@ public class EmpleadoPorts {
     public static final DeleteEmpleadoPort deleteEmpleadoPort = new DeleteEmpleadoPort() {
         @Override
         public void delete(EmpleadoId id) {
-            boolean deleted = CustomFixtures.EMPLEADOS_ASALARIADOS.removeIf(empleado -> empleado.getId().equals(id));
+            String idStr = id.toString();
+            boolean deleted = CustomFixtures.EMPLEADOS_ASALARIADOS.removeIf(e -> e.getId().equals(idStr))
+                    || CustomFixtures.EMPLEADOS_POR_HORAS.removeIf(e -> e.getId().equals(idStr))
+                    || CustomFixtures.EMPLEADOS_POR_COMISION.removeIf(e -> e.getId().equals(idStr))
+                    || CustomFixtures.EMPLEADOS_TEMPORALES.removeIf(e -> e.getId().equals(idStr));
 
-            if (!deleted) throw EmpleadoNotFound.becauseId(id.toString());
+            if (!deleted) throw EmpleadoNotFound.becauseId(idStr);
 
-            if(EMPLEADOS != null || !EMPLEADOS.isEmpty()){
-                EMPLEADOS.removeIf(empleado -> {
-                    if(empleado instanceof EmpleadoAsalariado){
-                        return ((EmpleadoAsalariado) empleado).getId().equals(id);
-                    }
-                    return false;
-                });
-            }
-
-            System.out.println("Empleado con ID " + id + " ha sido eliminado.");
+            EMPLEADOS.removeIf(e -> e.getId().equals(idStr));
+            System.out.println("Empleado con ID " + idStr + " ha sido eliminado.");
         }
     };
 
     public static final GetEmpleadoByIdPort getEmpleadoByIdPort = new GetEmpleadoByIdPort() {
         @Override
         public Empleado execute(EmpleadoId id) {
-            return (Empleado) EMPLEADOS.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(null);
+            return EMPLEADOS.stream().filter(e -> e.getId().equals(id.toString())).findFirst().orElse(null);
         }
     };
 

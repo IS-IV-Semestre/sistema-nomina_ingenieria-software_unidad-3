@@ -1,6 +1,8 @@
 package com.udc.adapters.console;
 
 import com.udc.application.empleado.EmpleadoPorHorasService;
+import com.udc.application.service.CreateEmpleadoPorHorasService;
+import com.udc.application.service.dto.command.CreateEmpleadoPorHorasCommand;
 import com.udc.domain.enums.empleado.tipoDocumento;
 import com.udc.domain.models.empleado.EmpleadoPorHoras;
 
@@ -68,8 +70,10 @@ public class EmpleadoPorHorasConsole {
         boolean aceptaFondoAhorro = leerBoolean("¿Acepta fondo de ahorro? (s/n): ");
 
         try {
-            current = service.crearEmpleado(nombre, apellido, antiguedad, tipoDoc, documento,
+            CreateEmpleadoPorHorasCommand command = new CreateEmpleadoPorHorasCommand(
+                    nombre, apellido, tipoDoc, documento, antiguedad,
                     tarifaHora, horasTrabajadas, aceptaFondoAhorro);
+            current = new CreateEmpleadoPorHorasService().execute(command);
             System.out.println("Empleado por horas creado con éxito. ID: " + current.getId());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error al crear empleado: " + ex.getMessage());
