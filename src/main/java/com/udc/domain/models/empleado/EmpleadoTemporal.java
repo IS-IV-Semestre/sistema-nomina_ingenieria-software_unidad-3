@@ -6,9 +6,9 @@ public class EmpleadoTemporal extends Empleado {
     protected int duracionContrato; 
     protected double salarioMensualFijo;
 
-    public EmpleadoTemporal(String nombre, String apellido, int duracionContrato, double salarioMensualFijo, tipoDocumento tipoDocumento, 
-        String documento) {
-            super(nombre, apellido, duracionContrato, tipoDocumento, documento);
+    public EmpleadoTemporal(String nombre, String apellido, int duracionContrato, tipoDocumento tipoDoc, String documento, 
+        double salarioMensualFijo) {
+            super(nombre, apellido, duracionContrato, tipoDoc, documento);
             if (duracionContrato <= 0) {
                 throw new IllegalArgumentException("La duración del contrato debe ser mayor a cero.");
             }
@@ -19,6 +19,7 @@ public class EmpleadoTemporal extends Empleado {
             this.salarioMensualFijo = salarioMensualFijo;
             
     }
+
     @Override
     public double calcularBeneficios() {
         return 0;
