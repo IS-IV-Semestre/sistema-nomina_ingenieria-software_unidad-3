@@ -3,6 +3,8 @@ package com.udc.adapters.console;
 import java.util.Scanner;
 
 import com.udc.application.empleado.EmpleadoPorComisionService;
+import com.udc.application.service.CreateEmpleadoPorComisionService;
+import com.udc.application.service.dto.command.CreateEmpleadoPorComisionCommand;
 import com.udc.domain.enums.empleado.tipoDocumento;
 import com.udc.domain.exceptions.DomainException;
 import com.udc.domain.models.empleado.EmpleadoPorComision;
@@ -75,9 +77,12 @@ public class EmpleadoPorComisionConsole {
         double ventas = leerDouble("Ventas totales del mes: ");
 
         try {
-            empleadoActual = service.crearEmpleado(nombre, apellido, antiguedad, tipoDoc, documento, salarioBase, porcentajeComision, ventas);
-            System.out.println("Empleado por comisión creado con éxito.");
-        } catch (DomainException ex) {
+            CreateEmpleadoPorComisionCommand command = new CreateEmpleadoPorComisionCommand(
+                    nombre, apellido, tipoDoc, documento, antiguedad,
+                    salarioBase, porcentajeComision, ventas);
+            empleadoActual = new CreateEmpleadoPorComisionService().execute(command);
+            System.out.println("Empleado por comisión creado con éxito. ID: " + empleadoActual.getId());
+        } catch (Exception ex) {
             System.out.println("Error al crear empleado: " + ex.getMessage());
         }
     }

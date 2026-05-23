@@ -16,7 +16,7 @@ public class CreateEmpleadoAsalariadoService implements CreateEmpleadoAsalariado
     @Override
     public EmpleadoAsalariado execute(CreateEmpleadoAsalariadoCommand command) {
         final EmpleadoAsalariado empleadoToSave = new EmpleadoAsalariado(
-                    command.id(),
+                    command.nombre(),
                     command.apellidos(),
                     command.antiguedadAnios(),
                     command.tipoDocumento(),

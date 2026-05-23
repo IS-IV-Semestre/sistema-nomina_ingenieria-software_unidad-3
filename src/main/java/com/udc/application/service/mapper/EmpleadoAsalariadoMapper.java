@@ -12,7 +12,7 @@ public class EmpleadoAsalariadoMapper {
 
     public Empleado fromCreateCommandToModel(CreateEmpleadoAsalariadoCommand command){
         return new EmpleadoAsalariado(
-                command.id(),
+                command.nombre(),
                 command.apellidos(),
                 command.antiguedadAnios(),
                 command.tipoDocumento(),

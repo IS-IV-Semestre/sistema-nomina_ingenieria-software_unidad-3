@@ -17,6 +17,13 @@ public class EmpleadoTemporalService {
 
     public double obtenerBeneficios(EmpleadoTemporal e) {
         return e.calcularBeneficios();
-    }    
+    }
+
+    public double obtenerDeducciones(EmpleadoTemporal e) {
+        return e.calcularDeducciones();
+    }
+
+    public double obtenerSalarioNeto(EmpleadoTemporal e) {
+        return e.calcularSalarioNeto();
+    }
 }
-    

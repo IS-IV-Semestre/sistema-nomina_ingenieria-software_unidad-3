@@ -3,6 +3,8 @@ package com.udc.adapters.console;
 import java.util.Scanner;
 
 import com.udc.application.empleado.EmpleadoTemporalService;
+import com.udc.application.service.CreateEmpleadoTemporalService;
+import com.udc.application.service.dto.command.CreateEmpleadoTemporalCommand;
 import com.udc.domain.enums.empleado.tipoDocumento;
 import com.udc.domain.models.empleado.EmpleadoTemporal;
 
@@ -25,15 +27,21 @@ public class EmpleadoTemporalConsole {
                     crearEmpleado();
                     break;
                 case 2:
-                    mostrarSalarioMensualFijo();
+                    mostrarSalarioBruto();
                     break;
                 case 3:
                     mostrarBeneficios();
                     break;
                 case 4:
-                    mostrarDuracionContrato();
+                    mostrarDeducciones();
                     break;
                 case 5:
+                    mostrarSalarioNeto();
+                    break;
+                case 6:
+                    mostrarDuracionContrato();
+                    break;
+                case 7:
                     mostrarDatosEmpleado();
                     break;
                 case 0:
@@ -48,10 +56,12 @@ public class EmpleadoTemporalConsole {
     private void mostrarMenu() {
         System.out.println("=== Empleado Temporal ===");
         System.out.println("1. Crear Empleado Temporal");
-        System.out.println("2. Mostrar Salario Mensual Fijo");
-        System.out.println("3. Mostrar Beneficios");
-        System.out.println("4. Mostrar Duración del Contrato");
-        System.out.println("5. Mostrar Datos del Empleado");
+        System.out.println("2. Mostrar salario bruto");
+        System.out.println("3. Mostrar beneficios");
+        System.out.println("4. Mostrar deducciones");
+        System.out.println("5. Mostrar salario neto");
+        System.out.println("6. Mostrar duración del contrato");
+        System.out.println("7. Mostrar datos del empleado");
         System.out.println("0. Salir");
     }
     private void crearEmpleado() {
@@ -64,8 +74,10 @@ public class EmpleadoTemporalConsole {
         String documento = leerLinea("Documento: ");
 
         try {
-            current = service.crearEmpleadoTemporal(nombre, apellido, duracionContrato,  tipoDoc, documento, salarioMensualFijo);
-            System.out.println("Empleado creado con éxito. ID: " + current.getId());
+            CreateEmpleadoTemporalCommand command = new CreateEmpleadoTemporalCommand(
+                    nombre, apellido, tipoDoc, documento, duracionContrato, salarioMensualFijo);
+            current = new CreateEmpleadoTemporalService().execute(command);
+            System.out.println("Empleado temporal creado con éxito. ID: " + current.getId());
         } catch (IllegalArgumentException ex) {
             System.out.println("Error al crear empleado: " + ex.getMessage());
         }
@@ -86,28 +98,38 @@ public class EmpleadoTemporalConsole {
         }
     }
 
-    private void mostrarSalarioMensualFijo() {
-        if (current == null) {
-            System.out.println("No hay empleado temporal creado.");
-            return;
+    private void mostrarSalarioBruto() {
+        if (validarEmpleadoCreado()) {
+            System.out.println("Salario bruto: " + service.obtenerSalarioBruto(current));
         }
-        System.out.println("Salario Mensual Fijo: " + current.getSalarioMensualFijo());
     }
 
     private void mostrarBeneficios() {
-        if (current == null) {
-            System.out.println("No hay empleado temporal creado.");
-            return;
+        if (validarEmpleadoCreado()) {
+            System.out.println("Beneficios: " + service.obtenerBeneficios(current));
         }
-        System.out.println("Beneficios: " + service.obtenerBeneficios(current));
+    }
+
+    private void mostrarDeducciones() {
+        if (validarEmpleadoCreado()) {
+            System.out.println("Deducciones: " + service.obtenerDeducciones(current));
+        }
+    }
+
+    private void mostrarSalarioNeto() {
+        if (validarEmpleadoCreado()) {
+            try {
+                System.out.println("Salario neto: " + service.obtenerSalarioNeto(current));
+            } catch (IllegalStateException ex) {
+                System.out.println("Error al calcular salario neto: " + ex.getMessage());
+            }
+        }
     }
 
     private void mostrarDuracionContrato() {
-        if (current == null) {
-            System.out.println("No hay empleado temporal creado.");
-            return;
+        if (validarEmpleadoCreado()) {
+            System.out.println("Duración del Contrato: " + current.getDuracionContrato() + " meses");
         }
-        System.out.println("Duración del Contrato: " + current.getDuracionContrato() + " meses");
     }
 
     private void mostrarDatosEmpleado() {
@@ -115,10 +137,10 @@ public class EmpleadoTemporalConsole {
             System.out.println("ID: " + current.getId());
             System.out.println("Nombre: " + current.getNombre());
             System.out.println("Apellido: " + current.getApellido());
-            System.out.println("Duración del Contrato: " + current.getDuracionContrato() + " meses");
             System.out.println("Tipo Documento: " + current.getTipoDocumento());
             System.out.println("Documento: " + current.getDocumento());
-            System.out.println("Salario mensual: " + current.getSalarioMensualFijo());
+            System.out.println("Duración del contrato: " + current.getDuracionContrato() + " meses");
+            System.out.println("Salario mensual fijo: " + current.getSalarioMensualFijo());
         }
     }
 
