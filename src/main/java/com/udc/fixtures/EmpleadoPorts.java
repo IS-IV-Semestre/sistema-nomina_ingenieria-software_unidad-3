@@ -4,6 +4,7 @@ import com.udc.application.port.out.*;
 import com.udc.domain.exceptions.empleado.EmpleadoNotFound;
 import com.udc.domain.models.empleado.Empleado;
 import com.udc.domain.models.empleado.EmpleadoAsalariado;
+import com.udc.domain.models.empleado.EmpleadoPorHoras;
 import com.udc.domain.valueobjects.empleado.EmpleadoId;
 
 import java.util.List;
@@ -76,6 +77,29 @@ public class EmpleadoPorts {
                 return empleadoAsalariado;
             }
             throw EmpleadoNotFound.becauseId(empleadoAsalariado.getId());
+        }
+    };
+
+    public static final SaveEmpleadoPorHorasPort saveEmpleadoPorHorasPort = new SaveEmpleadoPorHorasPort() {
+        @Override
+        public EmpleadoPorHoras create(EmpleadoPorHoras empleadoPorHoras) {
+            CustomFixtures.EMPLEADOS_POR_HORAS.add(empleadoPorHoras);
+            EMPLEADOS.add(empleadoPorHoras);
+            System.out.println("Empleado por horas con ID " + empleadoPorHoras.getId() + " ha sido creado.");
+            return empleadoPorHoras;
+        }
+    };
+
+    public static final UpdateEmpleadoPorHorasPort updateEmpleadoPorHorasPort = new UpdateEmpleadoPorHorasPort() {
+        @Override
+        public EmpleadoPorHoras update(EmpleadoPorHoras empleadoPorHoras) {
+            int index = EMPLEADOS_POR_HORAS.indexOf(empleadoPorHoras);
+            if (index != -1) {
+                EMPLEADOS_POR_HORAS.set(index, empleadoPorHoras);
+                System.out.println("Empleado por horas con ID " + empleadoPorHoras.getId() + " ha sido actualizado.");
+                return empleadoPorHoras;
+            }
+            throw EmpleadoNotFound.becauseId(empleadoPorHoras.getId());
         }
     };
 
