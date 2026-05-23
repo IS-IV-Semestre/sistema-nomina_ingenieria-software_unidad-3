@@ -13,9 +13,6 @@ public class GetEmpleadosService implements GetAllEmpleadosUseCase {
 
     @Override
     public List<Empleado> execute() {
-        if (getAllPort.execute().isEmpty()) {
-            throw new RuntimeException("No hay empleados registrados.");
-        }
         return getAllPort.execute();
     }
 }
