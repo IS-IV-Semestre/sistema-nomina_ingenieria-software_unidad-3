@@ -6,6 +6,7 @@ import com.udc.domain.models.empleado.Empleado;
 import com.udc.domain.models.empleado.EmpleadoAsalariado;
 import com.udc.domain.models.empleado.EmpleadoPorComision;
 import com.udc.domain.models.empleado.EmpleadoPorHoras;
+import com.udc.domain.models.empleado.EmpleadoTemporal;
 import com.udc.domain.valueobjects.empleado.EmpleadoId;
 
 import java.util.List;
@@ -124,6 +125,29 @@ public class EmpleadoPorts {
                 return empleadoPorComision;
             }
             throw EmpleadoNotFound.becauseId(empleadoPorComision.getId());
+        }
+    };
+
+    public static final SaveEmpleadoTemporalPort saveEmpleadoTemporalPort = new SaveEmpleadoTemporalPort() {
+        @Override
+        public EmpleadoTemporal create(EmpleadoTemporal empleadoTemporal) {
+            CustomFixtures.EMPLEADOS_TEMPORALES.add(empleadoTemporal);
+            EMPLEADOS.add(empleadoTemporal);
+            System.out.println("Empleado temporal con ID " + empleadoTemporal.getId() + " ha sido creado.");
+            return empleadoTemporal;
+        }
+    };
+
+    public static final UpdateEmpleadoTemporalPort updateEmpleadoTemporalPort = new UpdateEmpleadoTemporalPort() {
+        @Override
+        public EmpleadoTemporal update(EmpleadoTemporal empleadoTemporal) {
+            int index = EMPLEADOS_TEMPORALES.indexOf(empleadoTemporal);
+            if (index != -1) {
+                EMPLEADOS_TEMPORALES.set(index, empleadoTemporal);
+                System.out.println("Empleado temporal con ID " + empleadoTemporal.getId() + " ha sido actualizado.");
+                return empleadoTemporal;
+            }
+            throw EmpleadoNotFound.becauseId(empleadoTemporal.getId());
         }
     };
 
